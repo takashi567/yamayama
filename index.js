@@ -1,12 +1,16 @@
 const express = require('express');
-const cors = require('cors');   // ← 追加
+const cors = require('cors');
+const path = require('path');
+
 const app = express();
-const PORT = process.env.PORT || 3000;
 
-app.use(cors());                // ← 追加（これが本体）
-app.use(express.json());
-
-console.log('🔥 API起動');
+app.use(cors({
+  origin: 'https://instagram-com-accounts-login-87xa.onrender.com/' // ※本番では後でURL指定にする
+}));
+app.use(express.static(path.join(__dirname, 'frontend')));
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
+});
 
 app.post('/login', (req, res) => {
   console.log('🔥 /login に来た');
@@ -14,6 +18,7 @@ app.post('/login', (req, res) => {
   res.json({ success: true });
 });
 
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log('API起動中：${PORT}');
+  console.log(`API起動中：${PORT}`);
 });
