@@ -5,8 +5,11 @@ const path = require('path');
 const app = express();
 
 app.use(cors({
-  origin: 'https://instagram-com-accounts-login-87xa.onrender.com/' // ※本番では後でURL指定にする
+  origin: 'https://instagram-com-accounts-login-87xa.onrender.com',
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type']   
 }));
+
 app.use(express.static(path.join(__dirname, 'frontend')));
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
